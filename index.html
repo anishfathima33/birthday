@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meet Me At Marina Again | Happy 20th Birthday ❤️</title>
+  <meta name="description" content="A cinematic birthday love letter from Chennai to Bangalore — a digital Marina universe of memories, love, and dreams." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ CURSOR GLOW ============ -->
+  <div id="cursor-glow" aria-hidden="true"></div>
+
+  <!-- ============ PRELOADER ============ -->
+  <div id="preloader">
+    <div class="preloader-heart">❤️</div>
+    <p class="preloader-text">Loading our universe…</p>
+  </div>
+
+  <!-- ============ PASSWORD GATE ============ -->
+  <div id="password-gate" class="fullscreen">
+    <div class="universe-bg" aria-hidden="true"></div>
+    <div class="gate-particles" id="gate-particles" aria-hidden="true"></div>
+    <div class="gate-moon" aria-hidden="true">🌙</div>
+    
+    <div class="gate-box">
+      <h2 class="script-font">Only you can enter our universe ❤️</h2>
+      <p class="gate-hint">Hint: A number you know very well 👀</p>
+      
+      <div class="gate-input-wrap">
+        <input type="password" id="gate-input" maxlength="4" placeholder="••••" autocomplete="off" />
+        <button id="gate-submit">Enter 💌</button>
+      </div>
+      
+      <div id="gate-feedback" class="gate-feedback"></div>
+    </div>
+  </div>
+
+  <!-- ============ MUSIC GATE (Emotional Entry) ============ -->
+  <div id="music-gate" class="fullscreen hidden">
+    <div class="universe-bg" aria-hidden="true"></div>
+    <div class="gate-box">
+      <button id="music-enter-btn" class="script-font">Tap To Enter Our Universe 🎵❤️</button>
+      <p class="music-subtext">“Yaarumilla… but you. 💙”</p>
+    </div>
+  </div>
+
+  <!-- ============ PARTICLES CANVAS ============ -->
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+  <!-- ============ MOON EASTER EGG ============ -->
+  <div id="moon" title="Click me 🌙" aria-label="Secret moon message">🌙</div>
+  <div id="moon-message" class="easter-egg-popup" aria-hidden="true">
+    <p>"In every universe, I'd still choose you."</p>
+  </div>
+
+  <!-- ============ SECTION 1 — FIREWORKS BIRTHDAY INTRO ============ -->
+  <section id="section-fireworks" class="section fullscreen">
+    <canvas id="fireworks-canvas" aria-hidden="true"></canvas>
+    <div id="confetti-container" aria-hidden="true"></div>
+    <div class="fireworks-content" id="fireworks-content">
+      <div id="hero-hearts-container" aria-hidden="true"></div>
+      <h1 class="birthday-title" id="birthday-title">
+        <span class="title-line-1">Wish You The Happiest Birthday</span>
+        <span class="title-line-2">Mama</span>
+        <span class="title-emojis">💙🖤😘</span>
+      </h1>
+      <p class="subtitle-fade" id="birthday-subtitle">Tonight, even Chennai skies celebrate you with me.</p>
+      <button id="btn-come-meet" class="glow-btn" aria-label="Enter the website">Come Meet Me 🌙</button>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 2 — EMOTIONAL INTRO ============ -->
+  <section id="section-intro" class="section fullscreen">
+    <div class="waves-bg" aria-hidden="true"></div>
+    <div class="section-content">
+      <div class="typing-container" id="typing-intro">
+        <p class="typed-line" data-text="I know I couldn't be beside you tonight…"></p>
+        <p class="typed-line" data-text="So I made a place where our memories never have to leave."></p>
+      </div>
+      <p class="intro-question glow-text" id="intro-question">One last Marina date?</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 3 — 8AM MEMORIES ============ -->
+  <section id="section-8am" class="section">
+    <div class="sunlight-overlay" aria-hidden="true"></div>
+    <div class="section-content">
+      <h2 class="section-heading script-font">8AM…</h2>
+      <p class="section-subtext">The best part of my day always started with you.</p>
+      <div class="memory-grid" id="memory-grid">
+        <div class="polaroid-card" data-aos="fade-up">
+          <div class="polaroid-img">
+            <img src="images/first-smile.jpg" alt="Our first smile" loading="lazy" />
+          </div>
+          <p class="polaroid-caption">The first time you smiled at me — I forgot how to breathe.</p>
+        </div>
+        <div class="polaroid-card" data-aos="fade-up" data-delay="100">
+          <div class="polaroid-img">
+            <img src="images/funny-moments.jpg" alt="Funny moments" loading="lazy" />
+          </div>
+          <p class="polaroid-caption">You made me laugh so hard the waves got jealous.</p>
+        </div>
+        <div class="polaroid-card" data-aos="fade-up" data-delay="200">
+          <div class="polaroid-img">
+            <img src="images/beach-memory.jpg" alt="Beach memory" loading="lazy" />
+          </div>
+          <p class="polaroid-caption">That walk along Marina where time forgot to move.</p>
+        </div>
+        <div class="polaroid-card" data-aos="fade-up" data-delay="300">
+          <div class="polaroid-img">
+            <img src="images/late-night-chats.jpg" alt="Late night chats" loading="lazy" />
+          </div>
+          <p class="polaroid-caption">3AM conversations that felt like 3 minutes.</p>
+        </div>
+        <div class="polaroid-card" data-aos="fade-up" data-delay="400">
+          <div class="polaroid-img">
+            <img src="images/inside-jokes.jpg" alt="Inside jokes" loading="lazy" />
+          </div>
+          <p class="polaroid-caption">Things only we understand — and that's what makes them ours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 4 — OUR MARINA TIMELINE ============ -->
+  <section id="section-timeline" class="section">
+    <div class="waves-bg waves-bg-alt" aria-hidden="true"></div>
+    <div class="section-content">
+      <h2 class="section-heading script-font">Our Marina Timeline</h2>
+      <p class="section-subtext">"That beach heard every version of us."</p>
+      <div class="timeline" id="timeline">
+        <div class="timeline-item left" data-aos="fade-right">
+          <div class="timeline-card">
+            <h3>The First Hello</h3>
+            <p>Two strangers, one beach, and a story that was already written in the stars.</p>
+          </div>
+        </div>
+        <div class="timeline-item right" data-aos="fade-left">
+          <div class="timeline-card">
+            <h3>The Long Walks</h3>
+            <p>We walked until the sand ran out and the words never did.</p>
+          </div>
+        </div>
+        <div class="timeline-item left" data-aos="fade-right">
+          <div class="timeline-card">
+            <h3>The First Fight</h3>
+            <p>Even the waves were quiet that day. But we found our way back.</p>
+          </div>
+        </div>
+        <div class="timeline-item right" data-aos="fade-left">
+          <div class="timeline-card">
+            <h3>The "I Love You"</h3>
+            <p>Three words, one beach, a lifetime of meaning.</p>
+          </div>
+        </div>
+        <div class="timeline-item left" data-aos="fade-right">
+          <div class="timeline-card">
+            <h3>The Goodbye That Wasn't</h3>
+            <p>We said "see you soon" because goodbye was never an option.</p>
+          </div>
+        </div>
+      </div>
+      <p class="timeline-quote glow-text">"Even the sea knows I love you."</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 5 — OPEN WHEN SURPRISE BOXES ============ -->
+  <section id="section-openwhen" class="section">
+    <div class="section-content">
+      <h2 class="section-heading script-font">Open When…</h2>
+      <p class="section-subtext">Little pieces of my heart, saved for when you need them.</p>
+      <div class="openwhen-grid" id="openwhen-grid">
+        <div class="openwhen-card" data-modal="modal-miss">
+          <div class="openwhen-icon">💌</div>
+          <p>Open when you miss me</p>
+        </div>
+        <div class="openwhen-card" data-modal="modal-lonely">
+          <div class="openwhen-icon">🌙</div>
+          <p>Open when you feel lonely</p>
+        </div>
+        <div class="openwhen-card" data-modal="modal-stressed">
+          <div class="openwhen-icon">💆</div>
+          <p>Open when you are stressed</p>
+        </div>
+        <div class="openwhen-card" data-modal="modal-marina">
+          <div class="openwhen-icon">🌊</div>
+          <p>Open when you miss Marina</p>
+        </div>
+        <div class="openwhen-card" data-modal="modal-now">
+          <div class="openwhen-icon">❤️</div>
+          <p>Open right now ❤️</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CINEMATIC MODALS — MINI LETTERS ===== -->
+
+    <div class="modal-overlay" id="modal-miss" aria-hidden="true">
+      <div class="modal-content modal-cinematic">
+        <div class="modal-hearts-bg" id="hearts-miss" aria-hidden="true"></div>
+        <div class="modal-glow-bg" aria-hidden="true"></div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+        <h3 class="script-font">When You Miss Me…</h3>
+        <div class="modal-photo"><img src="images/miss-you.jpg" alt="Us together" loading="lazy" /></div>
+        <p>Close your eyes. Feel the Marina wind on your face. I'm right there beside you — always have been, always will be.</p>
+        <div class="mini-letter">
+          "My favorite habit, even when the world feels far away, I am holding your hand in my thoughts. Close your eyes and you'll find me there. ❤️"
+        </div>
+        <p class="modal-whisper">"Distance is just a test to see how far love can travel."</p>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-lonely" aria-hidden="true">
+      <div class="modal-content modal-cinematic">
+        <div class="modal-hearts-bg" id="hearts-lonely" aria-hidden="true"></div>
+        <div class="modal-glow-bg" aria-hidden="true"></div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+        <h3 class="script-font">When You Feel Lonely…</h3>
+        <div class="modal-photo"><img src="images/feel-lonely.jpg" alt="Leaning on you" loading="lazy" /></div>
+        <p>You're never alone. Not when someone 350km away thinks about you every single second of every single day.</p>
+        <div class="mini-letter">
+          "You are my person. And my person is never truly alone. I am looking at the same moon as you, mama. 🌙💕"
+        </div>
+        <p class="modal-whisper">"Same moon, same love, different cities."</p>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-stressed" aria-hidden="true">
+      <div class="modal-content modal-cinematic">
+        <div class="modal-hearts-bg" id="hearts-stressed" aria-hidden="true"></div>
+        <div class="modal-glow-bg" aria-hidden="true"></div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+        <h3 class="script-font">When You Are Stressed…</h3>
+        <p>Hey. Stop. Breathe. You're the strongest person I know.</p>
+        <div class="mini-letter">
+          "Take a deep breath. You've got this. I believe in you more than you believe in yourself. I'm always your #1 fan. 💆‍♂️✨"
+        </div>
+        <p>Take a break. Drink some water. And remember — your girl in Chennai believes in you.</p>
+        <p class="modal-whisper">"You don't have to carry everything alone. I'm here."</p>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-marina" aria-hidden="true">
+      <div class="modal-content modal-cinematic">
+        <div class="modal-hearts-bg" id="hearts-marina" aria-hidden="true"></div>
+        <div class="modal-glow-bg" aria-hidden="true"></div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+        <h3 class="script-font">When You Miss Marina…</h3>
+        <div class="modal-photo"><img src="images/marina-miss.jpg" alt="Marina Sunset" loading="lazy" /></div>
+        <p>Marina misses you too. The sand still remembers our footprints. The waves still whisper your name every evening.</p>
+        <div class="mini-letter">
+          "The sea knows all our secrets. One day, we'll be sitting on that same bench again, watching the sunset together. 🌊💙"
+        </div>
+        <p>Next time you're here, I'll be waiting at our spot. Same bench. Same smile. Same us.</p>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-now" aria-hidden="true">
+      <div class="modal-content modal-cinematic">
+        <div class="modal-hearts-bg" id="hearts-now" aria-hidden="true"></div>
+        <div class="modal-glow-bg" aria-hidden="true"></div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+        <h3 class="script-font">Right Now ❤️</h3>
+        <p>Right now, somewhere in Chennai, a girl is smiling because you exist in this world.</p>
+        <div class="mini-letter">
+          "I love you — and that's the most certain thing in my entire life. Happy 20th Birthday, my favorite habit. 🎂🖤"
+        </div>
+        <p class="glow-text modal-big-text">Happy Birthday, Mama. 🎂💙🖤</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 6 — LOVE QUIZ GAME ============ -->
+  <section id="section-quiz" class="section">
+    <div class="section-content">
+      <h2 class="section-heading script-font">How Well Do You Know Us?</h2>
+      <p class="section-subtext">A little quiz for the birthday boy 💕</p>
+      <div class="quiz-container" id="quiz-container">
+        <!-- Quiz questions injected by JS -->
+      </div>
+      <div class="quiz-result" id="quiz-result" aria-hidden="true">
+        <h3 class="script-font">You know us by heart ❤️</h3>
+        <p>Scroll down to unlock the next chapter of our story…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 7 — PRAYERS (CINEMATIC UNION) ============ -->
+  <section id="section-prayers" class="section">
+    <div class="spiritual-bg-union" aria-hidden="true"></div>
+    <div class="spiritual-overlay" aria-hidden="true"></div>
+    
+    <div class="light-rays-container" aria-hidden="true">
+      <div class="light-ray"></div>
+      <div class="light-ray"></div>
+    </div>
+    
+    <div class="spiritual-particles" id="spiritual-particles" aria-hidden="true"></div>
+    
+    <div class="section-content">
+      <div class="prayer-texts">
+        <p class="prayer-line" data-aos="fade-up">Two different paths,</p>
+        <p class="prayer-line" data-aos="fade-up" data-delay="200">Two different prayers…</p>
+        <div class="prayer-divider">✧</div>
+        <p class="prayer-line" data-aos="fade-up" data-delay="400">But when I close my eyes,</p>
+        <p class="prayer-line" data-aos="fade-up" data-delay="600">The only name I whisper is yours.</p>
+        <div class="prayer-divider">✧</div>
+        <p class="prayer-line large" data-aos="fade-up" data-delay="800">“Different faiths, same peace, same love.”</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 8 — FUTURE DREAM WORLD ============ -->
+  <section id="section-future" class="section">
+    <div class="section-content">
+      <h2 class="section-heading script-font">Someday…</h2>
+      <div class="future-grid" id="future-grid">
+        <div class="future-card" data-aos="zoom-in">
+          <div class="future-img-wrap">
+            <img src="images/future-beach-walk.png" alt="Future beach walk together" class="future-img dreamy" loading="lazy" />
+            <div class="future-card-particles" aria-hidden="true"></div>
+          </div>
+          <p class="future-caption">One day, this won't just be a dream.</p>
+        </div>
+        <div class="future-card" data-aos="zoom-in" data-delay="150">
+          <div class="future-img-wrap">
+            <img src="images/future-wedding.png" alt="Future wedding silhouette" class="future-img dreamy" loading="lazy" />
+            <div class="future-card-particles" aria-hidden="true"></div>
+          </div>
+          <p class="future-caption">The day I get to call you mine — officially.</p>
+        </div>
+        <div class="future-card" data-aos="zoom-in" data-delay="300">
+          <div class="future-img-wrap">
+            <img src="images/future-cafe-date.png" alt="Future cozy cafe date" class="future-img dreamy" loading="lazy" />
+            <div class="future-card-particles" aria-hidden="true"></div>
+          </div>
+          <p class="future-caption">No more distance. Just us.</p>
+        </div>
+        <div class="future-card" data-aos="zoom-in" data-delay="450">
+          <div class="future-img-wrap">
+            <img src="images/future-home.png" alt="Future home by the coast" class="future-img dreamy" loading="lazy" />
+            <div class="future-card-particles" aria-hidden="true"></div>
+          </div>
+          <p class="future-caption">Our future already feels real to me.</p>
+        </div>
+      </div>
+      <div class="future-text">
+        <p class="future-line" data-aos="fade-up">One day…</p>
+        <p class="future-line" data-aos="fade-up" data-delay="200">there won't be Bangalore and Chennai anymore.</p>
+        <p class="future-line" data-aos="fade-up" data-delay="400">No more 2PM goodbyes.</p>
+        <p class="future-line large glow-text" data-aos="fade-up" data-delay="600">Just us.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 9 — 2PM GOODBYE ============ -->
+  <section id="section-2pm" class="section fullscreen">
+    <div class="section-content">
+      <h2 class="section-heading script-font">2PM</h2>
+      <div class="goodbye-texts">
+        <p class="goodbye-line" data-aos="fade-up">2PM always came too fast…</p>
+        <p class="goodbye-line" data-aos="fade-up" data-delay="300">Leaving you never became easier.</p>
+      </div>
+      <div class="footsteps" id="footsteps" aria-hidden="true">
+        <span class="footstep">👣</span>
+        <span class="footstep">👣</span>
+        <span class="footstep">👣</span>
+        <span class="footstep">👣</span>
+        <span class="footstep">👣</span>
+      </div>
+      <div class="heartbeat-line" id="heartbeat" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 10 — 20 YEARS ============ -->
+  <section id="section-20" class="section fullscreen">
+    <div id="confetti-20" aria-hidden="true"></div>
+    <div class="section-content">
+      <div class="big-20" id="big-20">20</div>
+      <div class="twenty-texts">
+        <p data-aos="fade-up">20 years ago…</p>
+        <p data-aos="fade-up" data-delay="200">someone was born…</p>
+        <p data-aos="fade-up" data-delay="400">without knowing</p>
+        <p class="glow-text large" data-aos="fade-up" data-delay="600">he would someday become my favorite person.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 11.1 — LETTER INTRO ============ -->
+  <section id="section-letter-intro" class="section fullscreen">
+    <div class="candle-glow" aria-hidden="true"></div>
+    <div class="section-content">
+      <h2 class="section-heading script-font glow-text reveal-on-scroll" style="color: #fff; text-shadow: 0 0 30px rgba(240, 194, 127, 0.9); font-size: 4rem;">My Love Letter To You ❤️</h2>
+      <p class="section-subtext reveal-on-scroll" style="color: rgba(255,255,255,0.8); font-size: 1.5rem; margin-top: 1rem;">“A piece of my heart written only for you…”</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 11.2 — THE LETTER ============ -->
+  <section id="section-letter" class="section fullscreen">
+    <div class="letter-reveal-overlay" aria-hidden="true"></div>
+    <div class="candle-glow" aria-hidden="true"></div>
+    <div class="dust-container" id="dust-container" aria-hidden="true"></div>
+    <div class="fairy-lights" id="fairy-lights" aria-hidden="true"></div>
+    
+    <div class="scrapbook-container" style="max-width: 1000px; display: flex; justify-content: center;">
+      <div class="letter-paper" id="letter-paper" style="max-width: 900px; width: 95%; margin: 0 auto; animation: none; transform: rotate(0deg); opacity: 1;">
+        <div class="coffee-stain" style="top:50px; left:-30px; transform:scale(1.2);"></div>
+        <div class="coffee-stain" style="bottom:100px; right:-40px; opacity:0.05;"></div>
+        <div class="coffee-stain" style="top:50px; left:-30px; transform:scale(1.2);"></div>
+        <div class="coffee-stain" style="bottom:100px; right:-40px; opacity:0.05;"></div>
+        
+        <div class="side-note" style="top:100px; right:-80px; transform:rotate(15deg);">
+          I still have that train ticket...
+        </div>
+        <div class="side-note" style="bottom:250px; left:-90px; transform:rotate(-10deg);">
+          Chennai nights are quiet without you.
+        </div>
+
+        <div class="typing-container" id="typing-letter">
+          <h2 class="section-heading script-font" style="font-size: 2.5rem; margin-bottom: 2rem; color: #8b0000;">My Love Letter To You</h2>
+          <p class="typed-line" data-text="My Love,"></p>
+          <br>
+          <p class="typed-line" data-text="Two years of loving you…"></p>
+          <p class="typed-line" data-text="and this is already your third birthday with me."></p>
+          <br>
+          <p class="typed-line" data-text="But do you know something that still breaks my heart a little?"></p>
+          <br>
+          <div class="cinematic-quote typed-line" data-text="“You became my favorite habit.”"></div>
+          <br>
+          <p class="typed-line" data-text="Out of all your birthdays…"></p>
+          <p class="typed-line underlined" data-text="I could be beside you for only one."></p>
+          <br>
+          <p class="typed-line" data-text="Every year, all I ever wished for was simple —"></p>
+          <p class="typed-line" data-text="to be next to you when the clock strikes your birthday,"></p>
+          <p class="typed-line" data-text="to see your smile up close, to hold your hand,"></p>
+          <p class="typed-line" data-text="to hear your voice without a phone between us."></p>
+          <br>
+          <div class="cinematic-quote typed-line" data-text="“You feel like peace in a noisy world.”"></div>
+          <br>
+          <p class="typed-line" data-text="Because to me,"></p>
+          <p class="typed-line" data-text="your birthday never feels complete unless I’m with you, mama."></p>
+          <br>
+          <p class="typed-line" data-text="If I ever hurt you, if I ever made you feel unloved,"></p>
+          <p class="typed-line" data-text="please forgive me."></p>
+          <br>
+          <p class="typed-line" data-text="You always speak about building a good future,"></p>
+          <p class="typed-line" data-text="working hard, earning well, living peacefully,"></p>
+          <p class="typed-line" data-text="and I still remember every single word you said."></p>
+          <br>
+          <div class="cinematic-quote typed-line" data-text="“Even the sea at Marina remembers us.”"></div>
+          <br>
+          <p class="typed-line" data-text="I don’t know if you truly understand how much you mean to me…"></p>
+          <p class="typed-line" data-text="but I need you to know this tonight:"></p>
+          <br>
+          <p class="typed-line glow-text heartbeat-line-emotional" data-text="I love you more than my words can hold."></p>
+          <br>
+          <p class="typed-line" data-text="More than distance. More than ego."></p>
+          <p class="typed-line" data-text="More than every fight we survived together."></p>
+          <br>
+          <p class="typed-line" data-text="And all I want in life is to see you happy."></p>
+          <br>
+          <p class="typed-line" data-text="I pray that one day:"></p>
+          <p class="typed-line" data-text="you’ll have the job you dream about,"></p>
+          <p class="typed-line" data-text="a peaceful life, good salary, gold around your neck,"></p>
+          <p class="typed-line" data-text="no debts, no stress, no sadness."></p>
+          <br>
+          <div class="cinematic-quote typed-line" data-text="“Loving you became part of my soul.”"></div>
+          <br>
+          <p class="typed-line" data-text="Just happiness. The kind you deserve."></p>
+          <br>
+          <p class="typed-line" data-text="That’s why I keep pushing you."></p>
+          <p class="typed-line" data-text="That’s why I stay."></p>
+          <br>
+          <p class="typed-line" data-text="Because your future matters to me as much as my own."></p>
+          <br>
+          <p class="typed-line" data-text="And maybe… that’s what love truly is."></p>
+          <p class="typed-line" data-text="Not just saying “I love you” —"></p>
+          <p class="typed-line" data-text="but wanting to see the person you love win in life."></p>
+          <br>
+          <p class="typed-line" data-text="No matter how far Bangalore feels from Chennai,"></p>
+          <p class="typed-line" data-text="no matter how many 2PM goodbyes hurt us,"></p>
+          <p class="typed-line" data-text="a part of me will always wait for you at Marina."></p>
+          <br>
+          <p class="typed-line" data-text="Under the same sky. Near the same waves."></p>
+          <p class="typed-line" data-text="With the same love."></p>
+          <br>
+          <p class="typed-line" data-text="And if I had to choose again,"></p>
+          <p class="typed-line" data-text="in every lifetime, every universe…"></p>
+          <br>
+          <p class="typed-line" data-text="I would still choose you."></p>
+          <br>
+          <p class="typed-line" data-text="Forever."></p>
+          <br>
+          <p class="typed-line" data-text="I LOVE YOU FOREVER MAMA. 💙🖤😘"></p>
+        </div>
+
+        <div class="wax-seal" aria-hidden="true"></div>
+
+        <div class="signature" id="letter-signature">
+          — Yours always,<br>
+          the girl waiting for you between 8AM and 2PM. ❤️
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 12 — CINEMATIC SUNSET FINALE ============ -->
+  <section id="section-ending" class="section">
+    <div class="clouds-container" id="clouds-container" aria-hidden="true"></div>
+    <div class="sunset-waves" aria-hidden="true"></div>
+    <div class="floating-hearts" id="floating-hearts" aria-hidden="true"></div>
+    
+    <div class="ending-content">
+      <h2 class="ending-title script-font glow-text">Happy Birthday, My Love. ❤️</h2>
+      <p class="ending-subtitle">"Meet me at Marina again, in every lifetime."</p>
+      
+      <button class="final-gift-btn" id="btn-final-gift">Unlock My Final Gift 🎁</button>
+      
+      <p style="margin-top:2rem; opacity:0.4; font-size:0.8rem;">— from the girl who waits for you between 8AM and 2PM.</p>
+    </div>
+
+    <!-- Final Gift Reveal Overlay -->
+    <div class="gift-reveal" id="gift-reveal" aria-hidden="true">
+      <div class="gift-box-inner">
+        <div class="gift-heart">❤️</div>
+        <div class="gift-text">
+          My final gift isn't something I can buy.<br>
+          It's a promise.<br><br>
+          That no matter how many miles separate us,<br>
+          my heart will always be your home.
+        </div>
+        <div class="gift-promise">I WILL LOVE YOU FOREVER.</div>
+        <button class="audio-bar-btn" style="margin-top:3rem; padding:10px 20px;" onclick="document.getElementById('gift-reveal').classList.remove('show')">Close ❤️</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HIDDEN BOTTOM EASTER EGG ============ -->
+  <div id="hidden-bottom-message" aria-hidden="true">
+    <p>"I never wanted 2PM to come."</p>
+  </div>
+
+  <!-- ============ AUDIO SYSTEM — Tamil Romantic Instrumental ============ -->
+  <!--
+    🎵 AUDIO SETUP INSTRUCTIONS:
+    Place your audio files in an "audio/" folder. Suggested Tamil instrumentals:
+    - celebration.mp3 → Munbe Vaa piano celebration style
+    - romantic-piano.mp3 → Vaseegara soft piano instrumental
+    - emotional.mp3 → Nenjukkul Peidhidum / Maruvaarthai deep instrumental
+    - marina-ambience.mp3 → Marina night ambience with soft piano
+    - waves.mp3 → Ocean wave sounds
+    - heartbeat.mp3 → Subtle heartbeat effect
+    - seagulls.mp3 → Soft seagull ambience
+  -->
+  <audio id="audio-celebration" preload="auto" loop>
+    <!-- <source src="audio/celebration.mp3" type="audio/mpeg"> -->
+  </audio>
+  <audio id="audio-romantic" preload="auto" loop>
+    <!-- <source src="audio/romantic-piano.mp3" type="audio/mpeg"> -->
+  </audio>
+  <audio id="audio-emotional" preload="auto" loop>
+    <!-- <source src="audio/emotional.mp3" type="audio/mpeg"> -->
+  </audio>
+  <audio id="audio-marina" preload="auto" loop>
+    <!-- <source src="audio/marina-ambience.mp3" type="audio/mpeg"> -->
+  </audio>
+  <audio id="audio-waves" preload="auto" loop>
+    <!-- <source src="audio/waves.mp3" type="audio/mpeg"> -->
+  </audio>
+  <audio id="audio-heartbeat" preload="auto" loop>
+    <!-- <source src="audio/heartbeat.mp3" type="audio/mpeg"> -->
+  </audio>
+
+  <!-- ============ GLOBAL AUDIO CONTROL BAR ============ -->
+  <div id="audio-control-bar">
+    <button class="audio-bar-btn" id="audio-bar-toggle" aria-label="Toggle music">▶</button>
+    <div class="audio-bar-info">
+      <div class="audio-bar-title" id="audio-bar-track">♪ Tamil Romantic Instrumental</div>
+      <div class="audio-bar-subtitle">Marina Night Mood</div>
+    </div>
+    <div class="audio-bar-progress"><div class="audio-bar-fill" id="audio-bar-fill"></div></div>
+    <div class="audio-bar-vol" id="audio-bar-vol">
+      <div class="audio-bar-vol-fill" id="audio-bar-vol-fill"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
