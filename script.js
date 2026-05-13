@@ -1,13 +1,12 @@
 /* ===== MEET ME AT MARINA AGAIN — script.js ===== */
 
-// ——————— GLOBAL AUDIO (Yaarumilla) ———————
+// ——————— GLOBAL STATE & AUDIO ———————
 const bgMusic = new Audio('assets/music/Yaarumilla.mp3');
 bgMusic.loop = true;
-bgMusic.volume = 0; // Start at 0 for fade-in
+bgMusic.volume = 0; 
 
 function startBgMusic() {
   bgMusic.play().then(() => {
-    // Smooth fade in
     let vol = 0;
     const fadeInterval = setInterval(() => {
       vol += 0.05;
@@ -18,31 +17,70 @@ function startBgMusic() {
         bgMusic.volume = vol;
       }
     }, 200);
-  }).catch(err => console.log("Audio play blocked:", err));
+  }).catch(err => console.warn("Audio play blocked by browser:", err));
 }
 
-// Auto-resume if interrupted
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible' && !bgMusic.paused) {
-    bgMusic.play().catch(() => {});
-  }
-});
+// ——————— CORE INITIALIZATION ———————
+function initApp() {
+  console.log("Initializing Universe...");
+  
+  // 1. Core Gates
+  safeInit('Password Gate', initPasswordGate);
+  safeInit('Music Gate', initMusicGate);
+  
+  // 2. Visual Effects
+  safeInit('Cursor Glow', initCursorGlow);
+  safeInit('Particles/Stars', initParticles);
+  safeInit('Fireworks', initFireworksCanvas);
+  
+  // 3. Interactions
+  safeInit('Moon Easter Egg', initMoonEgg);
+  safeInit('Open When Boxes', initOpenWhenBoxes);
+  safeInit('Quiz Game', initQuiz);
+  safeInit('Final Gift', initFinalGift);
+  
+  // 4. Scroll & Reveal
+  safeInit('Scroll Observers', initScrollObservers);
+  
+  // 5. Global Helpers
+  safeInit('Come Meet Me Button', () => {
+    const meetBtn = document.getElementById('btn-come-meet');
+    if (meetBtn) {
+      meetBtn.addEventListener('click', () => {
+        document.getElementById('section-intro')?.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+  });
+}
 
-// ——————— PRELOADER & PASSWORD GATE ———————
-// ——————— PRELOADER & PASSWORD GATE ———————
+// Resilient DOM Loader
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
+
+// Universal Error Boundary for Components
+function safeInit(name, fn) {
+  try {
+    fn();
+  } catch (err) {
+    console.error(`Failed to initialize [${name}]:`, err);
+  }
+}
+
+// ——————— COMPONENT DEFINITIONS ———————
+
 function revealUniverse() {
   const preloader = document.getElementById('preloader');
   if (preloader && !preloader.classList.contains('hidden')) {
     preloader.classList.add('hidden');
-    initPasswordGate();
   }
 }
 
-// Resilient loading: reveal after 3s even if window.load hasn't fired
+// Trigger preloader removal
 window.addEventListener('load', revealUniverse);
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(revealUniverse, 3000); 
-});
+setTimeout(revealUniverse, 3500); // Fail-safe reveal
 
 function initPasswordGate() {
   const gate = document.getElementById('password-gate');
@@ -62,10 +100,7 @@ function initPasswordGate() {
       setTimeout(() => {
         gate.classList.add('hidden');
         const musicGate = document.getElementById('music-gate');
-        if (musicGate) {
-          musicGate.classList.remove('hidden');
-          initMusicGate();
-        }
+        if (musicGate) musicGate.classList.remove('hidden');
       }, 2500);
     } else {
       feedback.textContent = "Aii mental mama 😤💢 Intha password unna ku nalla therium 😭 Correct ah poduuu 💙🖤";
@@ -77,9 +112,7 @@ function initPasswordGate() {
   };
 
   btn.addEventListener('click', checkPassword);
-  input.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') checkPassword();
-  });
+  input.addEventListener('keypress', (e) => { if (e.key === 'Enter') checkPassword(); });
 }
 
 function initMusicGate() {
@@ -93,18 +126,21 @@ function initMusicGate() {
     
     setTimeout(() => {
       musicGate.classList.add('gate-finished');
-      const p = document.getElementById('preloader'); if(p) p.classList.add('gate-finished');
-      const g = document.getElementById('password-gate'); if(g) g.classList.add('gate-finished');
+      document.getElementById('preloader')?.classList.add('gate-finished');
+      document.getElementById('password-gate')?.classList.add('gate-finished');
       document.body.style.overflowY = 'auto';
     }, 1500);
 
-    initFireworks();
+    if (window.runFireworks) window.runFireworks();
   });
 }
 
-// ——————— CURSOR GLOW ———————
-const cursorGlow = document.getElementById('cursor-glow');
-if (cursorGlow) {
+function initCursorGlow() {
+  const cursorGlow = document.getElementById('cursor-glow');
+  if (!cursorGlow) return;
+  
+  document.documentElement.classList.add('has-custom-cursor');
+  
   document.addEventListener('mousemove', e => {
     cursorGlow.style.left = e.clientX + 'px';
     cursorGlow.style.top = e.clientY + 'px';
@@ -119,18 +155,18 @@ if (cursorGlow) {
   });
 }
 
-// ——————— PARTICLES (STARS) ———————
-const particlesCanvas = document.getElementById('particles-canvas');
-if (particlesCanvas) {
+function initParticles() {
+  const particlesCanvas = document.getElementById('particles-canvas');
+  if (!particlesCanvas) return;
   const pCtx = particlesCanvas.getContext('2d');
   let stars = [];
 
-  function resizeParticles() {
+  const resize = () => {
     particlesCanvas.width = window.innerWidth;
     particlesCanvas.height = window.innerHeight;
-  }
-  resizeParticles();
-  window.addEventListener('resize', resizeParticles);
+  };
+  resize();
+  window.addEventListener('resize', resize);
 
   for (let i = 0; i < 120; i++) {
     stars.push({
@@ -145,7 +181,7 @@ if (particlesCanvas) {
   const starMsgs = ["You are my moonlight 🌙", "Every star reminds me of you ✨", "Chennai nights miss you", "Distance means nothing when you mean everything", "My heart beats in your timezone", "You're my favorite notification 💌", "I smile because of you", "Love looks like us"];
   for (let i = 0; i < 8; i++) { if(stars[i*15]) stars[i*15].msg = starMsgs[i]; }
 
-  function drawStars() {
+  function draw() {
     pCtx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
     stars.forEach(s => {
       s.a += s.da;
@@ -155,12 +191,10 @@ if (particlesCanvas) {
       pCtx.fillStyle = `rgba(232,230,240,${s.a})`;
       pCtx.fill();
     });
-    requestAnimationFrame(drawStars);
+    requestAnimationFrame(draw);
   }
-  drawStars();
+  draw();
 
-  particlesCanvas.style.pointerEvents = 'auto'; 
-  particlesCanvas.style.zIndex = '1';
   particlesCanvas.addEventListener('click', e => {
     const rect = particlesCanvas.getBoundingClientRect();
     const mx = e.clientX - rect.left;
@@ -192,29 +226,28 @@ function showStarMessage(msg, x, y) {
   setTimeout(() => el.remove(), 2200);
 }
 
-// ——————— MOON EASTER EGG ———————
-const moon = document.getElementById('moon');
-const moonMsg = document.getElementById('moon-message');
-if (moon && moonMsg) {
-  let moonOpen = false;
-  moon.addEventListener('click', () => {
-    moonOpen = !moonOpen;
-    moonMsg.classList.toggle('show', moonOpen);
-  });
+function initMoonEgg() {
+  const moon = document.getElementById('moon');
+  const moonMsg = document.getElementById('moon-message');
+  if (moon && moonMsg) {
+    moon.addEventListener('click', () => {
+      moonMsg.classList.toggle('show');
+    });
+  }
 }
 
-// ——————— FIREWORKS CANVAS ———————
-const fwCanvas = document.getElementById('fireworks-canvas');
-if (fwCanvas) {
+function initFireworksCanvas() {
+  const fwCanvas = document.getElementById('fireworks-canvas');
+  if (!fwCanvas) return;
   const fwCtx = fwCanvas.getContext('2d');
   let fireworks = [], fwParticles = [], fwRunning = false;
 
-  function resizeFw() {
+  const resize = () => {
     fwCanvas.width = fwCanvas.parentElement.offsetWidth;
     fwCanvas.height = fwCanvas.parentElement.offsetHeight;
-  }
-  resizeFw();
-  window.addEventListener('resize', resizeFw);
+  };
+  resize();
+  window.addEventListener('resize', resize);
 
   class Firework {
     constructor(x, y) {
@@ -257,7 +290,7 @@ if (fwCanvas) {
     }
   }
 
-  window.initFireworks = function() {
+  window.runFireworks = function() {
     fwRunning = true;
     for (let i = 0; i < 6; i++) {
       setTimeout(() => {
@@ -267,11 +300,11 @@ if (fwCanvas) {
         ));
       }, i * 500);
     }
-    animateFireworks();
+    animate();
     setTimeout(() => { fwRunning = false; }, 8000);
   };
 
-  function animateFireworks() {
+  function animate() {
     if (!fwRunning && fireworks.length === 0 && fwParticles.length === 0) return;
     fwCtx.fillStyle = 'rgba(10,10,15,0.15)';
     fwCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
@@ -297,20 +330,167 @@ if (fwCanvas) {
     if (fwRunning && Math.random() < 0.03) {
       fireworks.push(new Firework(100 + Math.random() * (fwCanvas.width - 200), 50 + Math.random() * (fwCanvas.height * 0.4)));
     }
-    requestAnimationFrame(animateFireworks);
+    requestAnimationFrame(animate);
   }
 }
 
-// ——————— BUTTON: COME MEET ME ———————
-const meetBtn = document.getElementById('btn-come-meet');
-if (meetBtn) {
-  meetBtn.addEventListener('click', () => {
-    const target = document.getElementById('section-intro');
-    if (target) target.scrollIntoView({ behavior: 'smooth' });
+function initOpenWhenBoxes() {
+  const cards = document.querySelectorAll('.openwhen-card');
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const modalId = card.getAttribute('data-modal');
+      const modal = document.getElementById(modalId);
+      if (modal) modal.classList.add('show');
+    });
+  });
+  
+  document.querySelectorAll('.modal-close').forEach(close => {
+    close.addEventListener('click', () => {
+      close.closest('.modal-overlay')?.classList.remove('show');
+    });
+  });
+  
+  window.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal-overlay')) {
+      e.target.classList.remove('show');
+    }
   });
 }
 
-// ——————— TYPING ANIMATION ———————
+function initQuiz() {
+    const quizData = [
+      { 
+        q: "Who gets angry first? 😤", 
+        opts: ["You 🙄", "Me 😅", "Both at the same time 😂", "Nobody 😇"], 
+        correct: 0,
+        correctMsg: "Yes 💖 I get angry first… but you know me very well 😌❤️",
+        wrongMsg: "No, you know me so well 😤💔"
+      },
+      { 
+        q: "Who proposed first? 💕", 
+        opts: ["You 🥺", "Me 💌", "Both ✨", "Nobody yet 🙈"], 
+        correct: 1,
+        correctMsg: "Yes 🥰 you remember our memories 💞 it was me who proposed first ❤️",
+        wrongMsg: "No 😤 you forgot our beautiful moment 💔"
+      },
+      { 
+        q: "What is our favorite food together? 🍽️", 
+        opts: ["Fried Rice", "Noodles", "Pepper Chicken", "S.S. Biryani"], 
+        correct: 3,
+        correctMsg: "Yes 😍 we shared that beautiful day together 🍛✨ beach + biryani = perfect memory 💖🌊",
+        wrongMsg: "No 😡 how can you forget our special food memory 💔"
+      },
+      { 
+        q: "Who loves more? 🥺", 
+        opts: ["You", "I", "Equal 💕", "Trick question 😏"], 
+        correct: 2,
+        correctMsg: "Yes ❤️ love is always equal 💞 you and me = perfect balance 🥰✨",
+        wrongMsg: "Think again… real love is always equal ❤️🥺"
+      }
+    ];
+    
+    const qContainer = document.getElementById('quiz-container');
+    if (!qContainer) return;
+    
+    qContainer.innerHTML = ''; 
+    
+    quizData.forEach((q, idx) => {
+      const card = document.createElement('div');
+      card.className = 'quiz-question';
+      card.innerHTML = `
+        <h4>${q.q}</h4>
+        <div class="quiz-options"></div>
+        <div class="quiz-msg"></div>
+      `;
+      
+      const optsContainer = card.querySelector('.quiz-options');
+      const msgEl = card.querySelector('.quiz-msg');
+      
+      q.opts.forEach((opt, oIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-opt';
+        btn.textContent = opt;
+        
+        btn.addEventListener('click', function() {
+          const allBtns = optsContainer.querySelectorAll('.quiz-opt');
+          allBtns.forEach(b => b.style.pointerEvents = 'none');
+          
+          msgEl.classList.remove('correct', 'wrong');
+          
+          if (oIdx === q.correct) {
+            this.classList.add('correct');
+            msgEl.textContent = q.correctMsg;
+            msgEl.classList.add('show', 'correct');
+          } else {
+            this.classList.add('wrong');
+            allBtns[q.correct].classList.add('correct');
+            msgEl.textContent = q.wrongMsg;
+            msgEl.classList.add('show', 'wrong');
+          }
+          
+          checkQuizCompletion();
+        });
+        optsContainer.appendChild(btn);
+      });
+      qContainer.appendChild(card);
+    });
+}
+
+function checkQuizCompletion() {
+    const totalQuestions = document.querySelectorAll('.quiz-question').length;
+    const answeredQuestions = document.querySelectorAll('.quiz-msg.show').length;
+    if (totalQuestions === answeredQuestions && totalQuestions > 0) {
+        const result = document.getElementById('quiz-result');
+        if (result) {
+            result.style.opacity = '1';
+            result.style.transform = 'translateY(0)';
+            result.setAttribute('aria-hidden', 'false');
+        }
+    }
+}
+
+function initScrollObservers() {
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const id = entry.target.id;
+      if (id === 'section-intro' && !window.introTyped) {
+        window.introTyped = true;
+        typeWriter(document.getElementById('typing-intro'), () => {
+          document.getElementById('intro-question')?.classList.add('show');
+        });
+      }
+      if (id === 'section-letter' && !window.letterTyped) {
+        window.letterTyped = true;
+        typeWriter(document.getElementById('typing-letter'), () => {
+          document.getElementById('letter-signature')?.classList.add('show');
+        });
+        initScrapbookEffects();
+      }
+      if (id === 'section-20') spawnConfetti20();
+      if (id === 'section-ending') { startFloatingHearts(); spawnSunsetClouds(); }
+      if (id === 'section-prayers') initSpiritualParticles();
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.section').forEach(s => sectionObserver.observe(s));
+
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        entry.target.style.opacity = '1';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal-on-scroll, .polaroid-card, .timeline-item, .prayer-line, .future-card, .future-line, .goodbye-line, .twenty-texts p').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 1s ease, transform 1s ease';
+    fadeObserver.observe(el);
+  });
+}
+
 function typeWriter(container, callback) {
   if (!container) { if (callback) callback(); return; }
   const lines = container.querySelectorAll('.typed-line');
@@ -337,76 +517,6 @@ function typeWriter(container, callback) {
     typeChar();
   }
   typeLine();
-}
-
-// ——————— SCROLL OBSERVER ———————
-const sectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const id = entry.target.id;
-    if (id === 'section-intro' && !window.introTyped) {
-      window.introTyped = true;
-      typeWriter(document.getElementById('typing-intro'), () => {
-        document.getElementById('intro-question').classList.add('show');
-      });
-    }
-    if (id === 'section-letter' && !window.letterTyped) {
-      window.letterTyped = true;
-      typeWriter(document.getElementById('typing-letter'), () => {
-        const sig = document.getElementById('letter-signature');
-        if (sig) sig.classList.add('show');
-      });
-      initScrapbookEffects();
-    }
-    if (id === 'section-20') spawnConfetti20();
-    if (id === 'section-ending') { startFloatingHearts(); spawnSunsetClouds(); }
-    if (id === 'section-prayers') initSpiritualParticles();
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.section').forEach(s => sectionObserver.observe(s));
-
-// ——————— ELEMENT FADE REVEAL ———————
-const fadeObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      entry.target.style.opacity = '1';
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.section, .reveal-on-scroll, .polaroid-card, .timeline-item, .prayer-line, .future-card, .future-line, .goodbye-line, .twenty-texts p').forEach(el => {
-  el.style.opacity = '0';
-  el.style.transition = 'opacity 1s ease, transform 1s ease';
-  fadeObserver.observe(el);
-});
-
-// ——————— QUIZ ———————
-const quizData = [
-  { q: "Who gets angry first? 😤", opts: ["You 🙄", "Me 😅", "Both at the same time 😂", "Nobody 😇"], correct: 0 },
-  { q: "Who said 'I love you' first? 💕", opts: ["You 🥺", "Me 💌", "Both ✨", "Nobody yet 🙈"], correct: 1 },
-  { q: "What is our favorite food together? 🍽️", opts: ["Fried Rice", "Noodles", "Pepper Chicken", "SS Briyani"], correct: 3 },
-  { q: "Who misses the other more? 🥺", opts: ["You", "I", "Equal 💕", "Trick question 😏"], correct: 2 }
-];
-const qContainer = document.getElementById('quiz-container');
-if (qContainer) {
-  quizData.forEach((q, idx) => {
-    const div = document.createElement('div');
-    div.className = 'quiz-question';
-    div.innerHTML = `<h4>${q.q}</h4><div class="quiz-options"></div><p class="quiz-msg"></p>`;
-    const opts = div.querySelector('.quiz-options');
-    q.opts.forEach((opt, oIdx) => {
-      const b = document.createElement('button'); b.className = 'quiz-opt'; b.textContent = opt;
-      b.addEventListener('click', () => {
-        const btns = opts.querySelectorAll('.quiz-opt');
-        btns.forEach(btn => btn.style.pointerEvents = 'none');
-        if (oIdx === q.correct) { b.classList.add('correct'); } else { b.classList.add('wrong'); btns[q.correct].classList.add('correct'); }
-      });
-      opts.appendChild(b);
-    });
-    qContainer.appendChild(div);
-  });
 }
 
 function initScrapbookEffects() { initDustParticles(); initFairyLights(); initRosePetals(); }
@@ -517,10 +627,12 @@ function initSpiritualParticles() {
   }
 }
 
-document.getElementById('btn-final-gift').addEventListener('click', () => {
-  const reveal = document.getElementById('gift-reveal');
-  if (reveal) reveal.classList.add('show');
-  spawnConfetti();
-});
-
-
+function initFinalGift() {
+  const finalGiftBtn = document.getElementById('btn-final-gift');
+  if (finalGiftBtn) {
+    finalGiftBtn.addEventListener('click', () => {
+      document.getElementById('gift-reveal')?.classList.add('show');
+      spawnConfetti();
+    });
+  }
+}
